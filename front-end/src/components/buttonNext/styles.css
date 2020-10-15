@@ -1,0 +1,17 @@
+.buttonContainer{
+  margin-bottom: 1rem;
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+button{
+  width: 70vw;
+  height: 4rem;
+  font: 300 2.5rem Ubuntu;
+  color: var(--color-text-in);
+  background-color: var(--color-background-in);
+  border: 1px solid var(--color-border);
+  outline: none;
+  align-items: center;
+}

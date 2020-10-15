@@ -1,0 +1,31 @@
+.inputField{
+  margin: auto;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label{
+  font: 300 3rem Ubuntu;
+  margin-bottom: 0.1rem;
+}
+
+input{
+  width: 80vw;
+  max-width: 60rem;
+  height: 4rem;
+  padding: 0.5rem 1.6rem;
+  color: var(--color-text-in);
+  font: 300 2.5rem Ubuntu;
+  text-align: center;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  outline: none;
+  transition: 0.5s;
+}
+
+input:focus {
+  border: 1px solid black;
+  border-radius: 0.5rem;
+}
