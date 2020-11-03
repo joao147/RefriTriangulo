@@ -1,9 +1,12 @@
-import { Column} from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne} from 'typeorm'
 
+import Visit from '../visit';
+
+@Entity('visit_information')
 export default class VisitInformation {
   
   @Column()
-  reasonVisit: string;
+  equipamentType: string;
 
   @Column()
   equipamentModel: string;
@@ -11,4 +14,7 @@ export default class VisitInformation {
   @Column()
   problem: string;
 
+  @ManyToOne(type => Visit, visit => visit.visitInformation)
+  @JoinColumn(/*{name: visit_id}*/)
+  visit: Visit;
 }

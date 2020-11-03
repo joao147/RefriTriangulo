@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import * as Yup from 'yup'
 
+import Material from '../entities/entitiesComponents/material';
 import PostVisit from '../entities/postVisit';
 
 export default {
@@ -10,7 +11,7 @@ export default {
 
     const postVisitRepository = getRepository(PostVisit);
 
-    const allPostVitis = await postVisitRepository.find();
+    const allPostVitis = await postVisitRepository.find({ relations: ['material'] });
 
     return response.json(allPostVitis);
   },
@@ -21,7 +22,7 @@ export default {
 
     const { id } = request.params;
 
-    const postVisit = postVisitRepository.findOneOrFail(id);
+    const postVisit = postVisitRepository.findOneOrFail(id, { relations: ['material'] });
 
     return response.json(postVisit);
   },
@@ -30,36 +31,64 @@ export default {
 
     const {
       material,
-      priceLabor,
-      totalPrice
+      priceLabor
     } = request.body;
 
-    const data = {
-      material,
+    var totalPrice = priceLabor;
+
+    material.forEach((material: Material) => {totalPrice = totalPrice+ material.materialPrice})
+
+    const postVisitData = {
       priceLabor,
       totalPrice
     }
 
-    const schema = Yup.object().shape({
-      material: Yup.array(Yup.object().shape({
-        material: Yup.string().required(),
-        materialPrice: Yup.number().required(),
-        guarantee: Yup.string().required()
-      })),
+    const postVisitSchema = Yup.object().shape({
       priceLabor: Yup.number().required(),
       totalPrice: Yup.number().required()
     })
 
-    await schema.validate(data, {
+    await postVisitSchema.validate(postVisitData, {
       abortEarly: false
     })
 
+    const materialData = material.map((material: Material) => {
+      return {
+        material: material.material,
+        materialPrice: material.materialPrice,
+        guarantee: material.guarantee,
+        postVisit: newPostVisit
+      }
+    })
+
+    const materialSchema = Yup.array(Yup.object().shape({
+      material: Yup.string().required(),
+      materialPrice: Yup.number().required(),
+      guarantee: Yup.string().required(),
+      postVisit: postVisitSchema
+    }))
+
+    await materialSchema.validate(materialData, {
+      abortEarly: false
+    })
+
+    //new register on post_visit table
     const postVisitRepository = getRepository(PostVisit);
 
-    const newPostVisit = postVisitRepository.create(data);
+    const newPostVisit = postVisitRepository.create(postVisitData);
 
     await postVisitRepository.save(newPostVisit);
 
-    return response.status(201).json(newPostVisit);
+    //new registers on material table
+    const materialRepository = getRepository(Material);
+
+    materialData.forEach(async (material: Material) => {
+
+      const newMaterial = materialRepository.create(material);
+
+      await materialRepository.save(newMaterial);
+    })
+
+    return response.status(201);
   }
 }

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column} from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn} from 'typeorm'
 
 import Material from './entitiesComponents/material'
 
@@ -8,7 +8,10 @@ export default class PostVisit {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column(type => Material)
+  @OneToMany(type => Material, material => material.postVisit, {
+    cascade:['insert', 'update']
+  })
+  @JoinColumn(/*{name: postVisit_id}*/)
   material: Material[];
 
   @Column()

@@ -2,7 +2,10 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm'
 import * as Yup from 'yup'
 
+import VisitInformation from '../entities/entitiesComponents/visitInformation'
 import Visit from '../entities/visit'
+
+import getDateToString from '../util/getDateToString'
 
 export default {
 
@@ -10,7 +13,7 @@ export default {
 
     const visitRepository = getRepository(Visit);
 
-    const allVisit = await visitRepository.find();
+    const allVisit = await visitRepository.find({ relations: ['visitInformation'] });
 
     return response.json(allVisit)
   },
@@ -21,7 +24,7 @@ export default {
 
     const { id } = request.params;
 
-    const visit = await visitRepository.findOneOrFail(id);
+    const visit = await visitRepository.findOneOrFail(id, { relations: ['visitInformation'] });
 
     return response.json(visit)
   },
@@ -36,36 +39,63 @@ export default {
       visitInformation
     } = request.body;
 
-    const data = {
+    const visitDate = getDateToString(new Date());
+
+    const visitData = {
       name,
       adress,
       contact,
       secondContact,
-      visitInformation
+      visitDate
     }
 
-    const schema = Yup.object().shape({
+    const visitSchema = Yup.object().shape({
       name: Yup.string().required(),
       adress: Yup.string().required(),
       contact: Yup.string().required(),
       secondContact: Yup.string().notRequired(),
-      visitInformation: Yup.array(Yup.object().shape({
-        reasonVisit: Yup.string().required(),
-        equipamentModel: Yup.string().required(),
-        problem: Yup.string().required()
-      }))
+      visitDate: Yup.string().required()
     })
 
-    await schema.validate(data, {
+    await visitSchema.validate(visitData, {
+      abortEarly: false
+    })
+
+    const visitInformationData = visitInformation.map((visitInformation: VisitInformation) => {
+      return {
+        equipamentType: visitInformation.equipamentType,
+        equipamentModel: visitInformation.equipamentModel,
+        problem: visitInformation.problem,
+        visit: newVisit
+      }
+    })
+
+    const visitInformationSchema = Yup.array(Yup.object().shape({
+      equipamentType: Yup.string().required(),
+      equipamentModel: Yup.string().required(),
+      problem: Yup.string().required(),
+      visit: visitSchema
+    }))
+
+    await visitInformationSchema.validate(visitInformationData, {
       abortEarly: false
     })
 
     const visitRepository = getRepository(Visit);
 
-    const newVisit = visitRepository.create(data);
+    const newVisit = visitRepository.create(visitData);
 
     await visitRepository.save(newVisit);
 
-    return response.status(201).json(newVisit);
+    const visitInformationRepository = getRepository(VisitInformation);
+
+    visitInformationData.forEach(async (visitInformations: VisitInformation)=>{
+
+      const newVisitInformation = visitInformationRepository.create(visitInformations);
+
+      await visitInformationRepository.save(newVisitInformation);
+    })
+
+    return response.status(201);
   }
 }
