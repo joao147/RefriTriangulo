@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn} from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn} from 'typeorm'
 
+import Visit from './visit';
 import Material from './entitiesComponents/material'
 
 @Entity('post_visit')
@@ -11,12 +12,15 @@ export default class PostVisit {
   @OneToMany(type => Material, material => material.postVisit, {
     cascade:['insert', 'update']
   })
-  @JoinColumn(/*{name: postVisit_id}*/)
   material: Material[];
 
   @Column()
-  priceLabor: number;
+  laborPrice: number;
 
   @Column()
   totalPrice: number;
+
+  @OneToOne(type => Visit, visit => visit.postVisit)
+  @JoinColumn()
+  visit: Visit;
 }

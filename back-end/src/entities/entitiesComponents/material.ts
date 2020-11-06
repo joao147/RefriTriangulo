@@ -1,9 +1,12 @@
-import { Column, Entity, JoinColumn, ManyToOne} from 'typeorm'
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from 'typeorm'
 
 import PostVisit from '../postVisit'
 
 @Entity('material')
 export default class Material {
+
+  @PrimaryGeneratedColumn('increment')
+  id:number;
   
   @Column()
   material: string;
@@ -14,8 +17,7 @@ export default class Material {
   @Column()
   guarantee: string;
 
-  @Column()
   @ManyToOne(type => PostVisit, postVisit => postVisit.material)
-  @JoinColumn(/*{name: postVisit_id}*/)
+  @JoinColumn({name: 'postVisitId'})
   postVisit: PostVisit;
 }

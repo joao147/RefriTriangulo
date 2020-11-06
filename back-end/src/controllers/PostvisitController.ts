@@ -4,25 +4,26 @@ import * as Yup from 'yup'
 
 import Material from '../entities/entitiesComponents/material';
 import PostVisit from '../entities/postVisit';
+import Visit from '../entities/visit'
 
 export default {
 
   async index(request: Request, response: Response) {
 
-    const postVisitRepository = getRepository(PostVisit);
+    const postVisitRepository = await getRepository(PostVisit);
 
-    const allPostVitis = await postVisitRepository.find({ relations: ['material'] });
+    const allPostVitis = await postVisitRepository.find({ relations: ['visit', 'material'] });
 
     return response.json(allPostVitis);
   },
 
   async show(request: Request, response: Response){
 
-    const postVisitRepository = getRepository(PostVisit);
+    const postVisitRepository = await getRepository(PostVisit);
 
     const { id } = request.params;
 
-    const postVisit = postVisitRepository.findOneOrFail(id, { relations: ['material'] });
+    const postVisit = await postVisitRepository.findOneOrFail(id, { relations: ['visit', 'material'] });
 
     return response.json(postVisit);
   },
@@ -31,64 +32,44 @@ export default {
 
     const {
       material,
-      priceLabor
+      laborPrice,
+      visitId
     } = request.body;
 
-    var totalPrice = priceLabor;
+    var totalPrice = laborPrice;
 
-    material.forEach((material: Material) => {totalPrice = totalPrice+ material.materialPrice})
+    material.forEach((material: Material) => {totalPrice = totalPrice + material.materialPrice})
 
-    const postVisitData = {
-      priceLabor,
-      totalPrice
+    const visit = await getRepository(Visit).findOne(visitId);
+
+    const data = {
+      material,
+      laborPrice,
+      totalPrice,
+      visit: visit
     }
 
-    const postVisitSchema = Yup.object().shape({
+    const schema = Yup.object().shape({
+      material: Yup.array(Yup.object().shape({
+        material: Yup.string().required(),
+        materialPrice: Yup.number().required(),
+        guarantee: Yup.string().required()
+      })),
       priceLabor: Yup.number().required(),
-      totalPrice: Yup.number().required()
+      totalPrice: Yup.number().required(),
+      visitId: Yup.number().required()
     })
 
-    await postVisitSchema.validate(postVisitData, {
+    await schema.isValid(data, {
       abortEarly: false
     })
 
-    const materialData = material.map((material: Material) => {
-      return {
-        material: material.material,
-        materialPrice: material.materialPrice,
-        guarantee: material.guarantee,
-        postVisit: newPostVisit
-      }
-    })
-
-    const materialSchema = Yup.array(Yup.object().shape({
-      material: Yup.string().required(),
-      materialPrice: Yup.number().required(),
-      guarantee: Yup.string().required(),
-      postVisit: postVisitSchema
-    }))
-
-    await materialSchema.validate(materialData, {
-      abortEarly: false
-    })
-
-    //new register on post_visit table
     const postVisitRepository = getRepository(PostVisit);
 
-    const newPostVisit = postVisitRepository.create(postVisitData);
+    const newPostVisit = postVisitRepository.create(data);
 
     await postVisitRepository.save(newPostVisit);
 
-    //new registers on material table
-    const materialRepository = getRepository(Material);
-
-    materialData.forEach(async (material: Material) => {
-
-      const newMaterial = materialRepository.create(material);
-
-      await materialRepository.save(newMaterial);
-    })
-
-    return response.status(201);
+    return response.status(201).json(data);
   }
 }

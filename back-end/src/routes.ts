@@ -11,6 +11,7 @@ routes.get('/visit/:id', VisitController.show);
 routes.post('/visit/create', VisitController.create);
 
 //Rotas para o pós-visita
+routes.get('/post_visit/', PostVisitController.index);
 routes.get('/post_visit/:id', PostVisitController.show);
 routes.post('/post_visit/create', PostVisitController.create);
 

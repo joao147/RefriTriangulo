@@ -2,16 +2,15 @@
    "type": "mysql",
    "host": "localhost",
    "port": 3306,
-   "username": "test",
-   "password": "04@atena02",
+   "username": "root",
+   "password": "password",
    "database": "triangulo",
    "synchronize": true,
-   "logging": false,
    "entities": [
-      "./src/entity/**/*.ts"
+      "./src/entities/**/*.ts"
    ],
    "migrations": [
-      "./src/migration/**/*.ts"
+      "./src/database/migration/*.ts"
    ],
    "cli": {
       "migrationsDir":"./src/database/migration"

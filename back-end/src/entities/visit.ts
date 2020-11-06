@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinColumn} from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne} from 'typeorm'
 
 import VisitInformation from './entitiesComponents/visitInformation'
+import PostVisit from './postVisit'
 
 @Entity('visit')
 export default class Visit {
@@ -23,9 +24,11 @@ export default class Visit {
   @OneToMany(type => VisitInformation, visitInformation => visitInformation.visit, {
     cascade:['insert', 'update']
   })
-  @JoinColumn(/*{name: visit_id}*/)
   visitInformation: VisitInformation[];
   
   @Column()
   visitDate: string;
+
+  @OneToOne(type => PostVisit, postVisit => postVisit.visit)
+  postVisit: PostVisit
 }
