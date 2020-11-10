@@ -6,13 +6,14 @@ import './styles.css'
 
 interface TitleProps{
   title: string;
+  goback?: boolean;
 }
 
-const Title:React.FC<TitleProps> = ({ title }) => {
+const Title:React.FC<TitleProps> = ({ title, goback=true }) => {
 
   return (
     <div className="title">
-      <Link to='/' className='goback'><FiArrowLeft size={30} color='000000'/></Link>
+      {goback && <Link to='/' className='goback'><FiArrowLeft size={30} color='000000'/></Link>}
       <h1>{title}</h1>
     </div>
   )

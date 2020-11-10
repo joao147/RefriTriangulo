@@ -8,23 +8,24 @@ export interface Visit{
   adress: string;
   contact: string;
   secondContact?: string;
-  visitInformation:[{equipamenteType: string, equipamentModel: string, problem: string}];
+  visitInformation:[{equipamentType: string, equipamentModel: string, problem: string}];
   visitDate: string;
 }
 
-interface VisitItemProps{
+export interface VisitItemProps{
   visitItem: Visit;
 }
 
   const VisitItem:React.FC<VisitItemProps> = ({visitItem}) => {
 
-  return (
-    <div className='visitItem'>
-      <header><p className='name'>{visitItem.name}</p><span className='date'>{visitItem.visitDate}</span></header>
-        <main></main>
-      <footer></footer>
-    </div>
-  )
+    return (
+      <div className='visitItem'>
+          <main>
+            <p className='name'>Nome do cliente: {visitItem.name}</p>
+            <span className='date'>Data da visita: {visitItem.visitDate}</span>
+          </main>
+      </div>
+    )
 }
 
 export default VisitItem;

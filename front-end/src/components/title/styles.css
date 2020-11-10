@@ -1,5 +1,5 @@
 .title{
-  margin: 2rem auto;
+  margin: 4% auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,7 +7,7 @@
 
 .goback{
   position: absolute;
-  top: 4.5%;
+  top: 5%;
   left: 6.5%;
 }
 

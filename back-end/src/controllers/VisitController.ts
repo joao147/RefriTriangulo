@@ -23,7 +23,7 @@ export default {
 
     const { id } = request.params;
 
-    const visit = await visitRepository.findOneOrFail(id, { relations: ['visitInformation'] });
+    const visit = await visitRepository.findOne(id, { relations: ['visitInformation'] });
 
     return response.json(visit)
   },
