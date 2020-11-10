@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
+import { useHistory } from 'react-router-dom'
+import { FiPlus } from 'react-icons/fi';
 
-// import ButtonNext from '../../components/buttonNext';
-import Input from '../../components/input/index';
-import Title from '../../components/title/index';
-import Select from '../../components/Select/index'
+import api from '../../services/api'
+
+import Input from '../../components/input';
+import Title from '../../components/title';
+import Select from '../../components/selected'
 
 import './styles.css'
-import { isOptionalChain } from 'typescript';
 
 function FormVisit() {
+
+  const goBack = useHistory()
 
   const [name, setName] = useState('')
   const [adress, setAdress] = useState('')
@@ -45,83 +49,143 @@ function FormVisit() {
     {value:'outro', label:'outro'},
   ] 
 
-  var url = '';
+  function visitInformationCheck(){
+    visitInformation.forEach((visitInf, index) =>{
+      if (visitInf.equipamentType === '' && visitInf.equipamentModel === '' && visitInf.problem === ''){
+        if(visitInformation.length > 1)
+          visitInformation.splice(index, 1)
+      }
+    })
+  }
+
+  function handlerSubmit(e: FormEvent) {
+    e.preventDefault()
+
+    visitInformationCheck();
+
+    var visitInformationValidation = false;
+
+    visitInformation.forEach(visitInf => {
+      if (visitInf.equipamentType === '' || visitInf.equipamentModel === '' || visitInf.problem === ''){
+        visitInformationValidation = true;
+      }
+    })
+  
+    if (name === '' || adress === '' || contact=== ''){
+      alert('preencha todos os dados do cliente')
+    }
+    else if(visitInformationValidation){
+      alert('preencha todos os dados do equipamento' )
+    }
+    else{
+
+      api.post('visit', {
+        name,
+        adress,
+        contact,
+        secondContact,
+        visitInformation
+      }).then(() => {
+        alert('Visita cadastrada com sucesso!');
+
+        goBack.push('/');
+      }).catch(() => {
+        alert('Ocorreu algum erro, tente de novo em 2 minutos!');
+      });
+    } 
+  }
 
   return (
     <div className='App'>
-      <Title title='Triangulo' src={url}/>
+      <Title title='Triangulo'/>
 
-      <form>
-        <Input 
-          name='name' 
-          type='text' 
-          label='Nome do Cliente' 
-          value={name}
-          onChange={e => {setName(e.target.value)}}
-        />
+      <form onSubmit={handlerSubmit}>
 
-        <Input 
-          name='adress' 
-          type='text' 
-          label='Endereço da visita' 
-          value={adress}
-          onChange={e => {setAdress(e.target.value)}}
-        />
+        <fieldset>
 
-        <Input 
-          name='contact'
-          type='text' 
-          label='Contato' 
-          value={contact}
-          onChange={e => {setContact(e.target.value)}}
-        />
+          <legend className='legend'>Informações sobre cliente</legend>
 
-        <Input 
-          name='secondContact' 
-          type='text' 
-          label='Contato opcional' 
-          value={secondContact}
-          onChange={e => {setSecondContact(e.target.value)}}
-        />
+          <div className="clientData">
+            <Input 
+              name='name' 
+              type='text' 
+              label='Nome do Cliente' 
+              value={name}
+              onChange={e => {setName(e.target.value)}}
+            />
+
+            <Input 
+              name='adress' 
+              type='text' 
+              label='Endereço da visita' 
+              value={adress}
+              onChange={e => {setAdress(e.target.value)}}
+            />
+
+            <Input 
+              name='contact'
+              type='text' 
+              label='Contato' 
+              value={contact}
+              onChange={e => {setContact(e.target.value)}}
+            />
+
+            <Input 
+              name='secondContact' 
+              type='text' 
+              label='Contato opcional' 
+              value={secondContact}
+              onChange={e => {setSecondContact(e.target.value)}}
+            />
+          </div>
+
+        </fieldset>
+        <fieldset>
+      
+          <legend className='legend' >
+            Informações sobre equipamentos
+            <button type='button' className='button-addItem' onClick={newVisitInformationItem}>
+              <FiPlus size={24} color='#000000'/>Adicionar equipamento
+            </button>
+          </legend>
+
+          {visitInformation.map((visitInf, index) => {
+            return (
+              
+              <div key={index} className='equipaments'>
+
+                <Select 
+                  name='equipamentType' 
+                  label='Equipamento' 
+                  options={equipamentOptions}
+                  value={visitInf.equipamentType}
+                  onChange={e => setvisitInformationsValue(index, 'equipamentType', e.target.value)}
+                />
+
+                <Input 
+                  name='equipamentModel' 
+                  type='text' 
+                  label='Modelo do equipamento'
+                  value={visitInf.equipamentModel}
+                  onChange={e => setvisitInformationsValue(index, 'equipamentModel', e.target.value)}
+                />
+
+                <Input 
+                  name='problem' 
+                  type='text' 
+                  label='Problema detectado' 
+                  value={visitInf.problem}
+                  onChange={e => setvisitInformationsValue(index, 'problem', e.target.value)}
+                />
+
+              </div>
+            )
+          })}
+        </fieldset>
         
-        <label>Informações sobre equipamentos</label>
-        <button type='button' onClick={newVisitInformationItem}>Adicionar equipamento</button>
-
-        {visitInformation.map((visitInf, index) => {
-          return (
-
-            <div key={visitInf.equipamentModel+visitInf.equipamentType}>
-
-              <Select 
-                name='equipamentType' 
-                label='Equipamento' 
-                options={equipamentOptions}
-                value={visitInf.equipamentType}
-                onChange={e => setvisitInformationsValue(index, 'equipamentType', e.target.value)}
-              />
-
-              <Input 
-                name='equipamentModel' 
-                type='text' 
-                label='Modelo do equipamento'
-                value={visitInf.equipamentModel}
-                onChange={e => setvisitInformationsValue(index, 'equipamentModel', e.target.value)}
-              />
-
-              <Input 
-                name='problem' 
-                type='text' 
-                label='Problema detectado' 
-                value={visitInf.problem}
-                onChange={e => setvisitInformationsValue(index, 'problem', e.target.value)}
-              />
-
-            </div>
-          )
-        })}
-          
-        
-        {/* <ButtonNext name='Cadastrar visita' type='submit'/> */}
+        <footer>
+          <button type='submit' className='submit'>Cadastrar Visita</button>
+        </footer>
       </form>
     </div>
   );

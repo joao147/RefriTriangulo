@@ -1,8 +1,78 @@
 form{
   width: 90vw;
-  padding: 1rem 0;
+  padding: 10px 10px;
   margin: 2rem 5vw;
   align-self: center;
-  border-radius: 1rem;
+  border-radius: 10px;
   background-color: white;
+}
+
+fieldset{
+  border: none;
+  padding: 0 25px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+fieldset + fieldset{
+  margin-top: 30px;
+}
+
+.legend{
+  font: 700 26px Ubuntu;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+
+  margin-bottom: 10px;
+}
+
+.button-addItem{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  
+  background-color: var(--color-background);
+
+  outline: none;
+  border: 0;
+}
+
+.equipaments, .clientData{
+  width: 80vw;
+
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.equipaments + .equipaments{
+  margin-top: 10px;
+}
+
+footer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 15px 0;
+}
+
+.submit{
+  font: 500 21px Ubuntu;
+  width: 50%;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--color-background);
+
+  border: 0;
 }

@@ -1,0 +1,49 @@
+.landing-page{
+  width: 100vw;
+  height: 100vh;
+
+  margin: auto;
+
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+      "createVisit"
+      "visits"
+      "postVisits"
+    ;
+
+  align-items: center;
+  justify-items: center;
+}
+
+.createVisit{
+  grid-area: createVisit;
+}
+
+.visits{
+  grid-area: visits;
+}
+
+.postVisits{
+  grid-area: postVisits;
+}
+
+.createVisit, .postVisits, .visits{
+  width: 70vw;
+  height: 20vh;
+
+  font: 500 30px Ubuntu;
+  color: black;
+  text-decoration: none;
+  text-align: center;
+
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid black;
+}
