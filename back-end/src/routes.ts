@@ -5,14 +5,12 @@ import PostVisitController from './controllers/PostVisitController';
 
 const routes = Router();
 
-//Routas para visita
 routes.get('/visit', VisitController.index);
 routes.get('/visit/:id', VisitController.show);
-routes.post('/visit/create', VisitController.create);
+routes.post('/visit', VisitController.create);
 
-//Rotas para o pós-visita
-routes.get('/post_visit/', PostVisitController.index);
+routes.get('/post_visit', PostVisitController.index);
 routes.get('/post_visit/:id', PostVisitController.show);
-routes.post('/post_visit/create', PostVisitController.create);
+routes.post('/post_visit', PostVisitController.create);
 
 export default routes
