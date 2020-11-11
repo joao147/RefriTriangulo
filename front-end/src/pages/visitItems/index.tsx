@@ -30,19 +30,9 @@ const Visits = () => {
 
   return (
     <div className="visits-page">
+      
       <Title title="Triangulo"/>
-      {/* <div className='visitItem'>
-      <header><p className='name'>Nome do cliente: João</p><span className='date'>Data da visita: 21/11/2020</span></header>
-      <main>
-        <p>Endereço: Rua. Arthur</p> 
-        <p>Contato: 33669988</p>
-          <div>
-            <p>Equipamento:geladeira | Modelo:147852</p>
-            <p>Problema constatado: não gela</p>
-          </div>
-       
-      </main>
-    </div> */}
+     
       <div className="visits">
         {visits.map((visitItem: Visit) => {
           return(

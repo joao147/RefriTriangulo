@@ -2,10 +2,12 @@ import React from 'react';
 
 import {VisitItemProps} from '../visitItem/index'
 
+import './style.css'
+
 const VisitComponent: React.FC<VisitItemProps> = (({visitItem}) => {
 
   return (
-    <div>
+    <div className='visit'>
       <header>
 
         <p className='name'>Nome do cliente: {visitItem.name}</p>
@@ -23,14 +25,15 @@ const VisitComponent: React.FC<VisitItemProps> = (({visitItem}) => {
         <p>Contado opcional: {visitItem.secondContact}</p>
 
         {visitItem.visitInformation.map((visitInfo , index) => {
+
           return(
             <div key={index} className='infos'>
 
-              <p>Endereço: {visitInfo.equipamentType}</p>
+              <p>Equipamento: {visitInfo.equipamentType}</p>
 
-              <p>Endereço: {visitInfo.equipamentModel}</p>
+              <p>Modelo: {visitInfo.equipamentModel}</p>
 
-              <p>Endereço: {visitInfo.problem}</p>
+              <p>Problema constatado: {visitInfo.problem}</p>
 
             </div>
           )

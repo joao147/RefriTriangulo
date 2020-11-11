@@ -1,0 +1,35 @@
+.visit{
+  width: 90vw;
+  
+  margin: auto;
+  padding: 0 5px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: white;
+  border: 1px solid black;
+}
+
+header{
+  margin: 15px 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+main{
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.infos{
+  margin: 15px 0;
+}

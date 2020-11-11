@@ -5,7 +5,8 @@ import FormVisit from './pages/formVisit'
 import FormPostVisit from './pages/formPostVisit';
 import Landing from './pages/landing';
 import VisitItems from './pages/visitItems';
-import VisitComplete from './pages/visitComplete/index'
+import VisitComplete from './pages/visitComplete'
+import PostVisits from './pages/postVisit'
 
 const Routes = () => {
   
@@ -13,11 +14,11 @@ const Routes = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Landing}/>
-        <Route path="/visit/create" component={FormVisit}/>
-        <Route path="/postVisit/create" component={FormPostVisit}/>
-        <Route path="/visits" component={VisitItems}/>
-        <Route path="/visit/:id" component={VisitComplete}/>
-        <Route path="/postVisits" component={FormPostVisit}/>
+        <Route path="/visit/create" exact component={FormVisit}/>
+        <Route path="/visit/postVisit/create/:id" exact component={FormPostVisit}/>
+        <Route path="/visit" exact component={VisitItems}/>
+        <Route path="/visit/:id" exact component={VisitComplete}/>
+        <Route path="/postVisit" exact component={PostVisits}/>
       </Switch>
     </BrowserRouter>
   )

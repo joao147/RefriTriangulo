@@ -8,9 +8,8 @@ export interface Visit{
   adress: string;
   contact: string;
   secondContact?: string;
-  visitInformation:[{equipamentType: string, equipamentModel: string, problem: string}];
-  visitDate: string;
-}
+  visitInformation:{equipamentType: string, equipamentModel: string, problem: string}[];
+  visitDate: string;}
 
 export interface VisitItemProps{
   visitItem: Visit;
