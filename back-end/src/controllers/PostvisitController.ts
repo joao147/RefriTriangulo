@@ -12,7 +12,7 @@ export default {
 
     const postVisitRepository = await getRepository(PostVisit);
 
-    const allPostVitis = await postVisitRepository.find({ relations: ['visit', 'material'],  });
+    const allPostVitis = await postVisitRepository.find({ relations: ['visit', 'material', 'visit.visitInformation'] });
 
     return response.json(allPostVitis);
   },
@@ -69,6 +69,10 @@ export default {
     const newPostVisit = postVisitRepository.create(data);
 
     await postVisitRepository.save(newPostVisit);
+
+    visit.status = true;
+
+    await getRepository(Visit).save(visit);
 
     return response.status(201).json(data);
   }

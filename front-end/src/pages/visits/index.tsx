@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import api from '../../services/api';
 
-import VisitItem, {Visit} from '../../components/visitItem';
+import VisitItem, {Visit} from '../../components/visits';
 import Title from '../../components/title';
 
 import './style.css';
@@ -13,10 +13,7 @@ const Visits = () => {
   const [visits, setVisits] = useState([]);
   
   async function getVisits(){
-
-    const response = await api.get('visit')
-
-    setVisits(response.data);
+    await api.get('visit').then((response)=>{setVisits(response.data)})
   }
 
   function setId(id: number){

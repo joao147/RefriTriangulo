@@ -5,17 +5,20 @@ import './style.css';
 export interface Visit{
   id: number;
   name: string;
+  document: string;
   adress: string;
   contact: string;
   secondContact?: string;
-  visitInformation:{equipamentType: string, equipamentModel: string, problem: string}[];
+  technician: string;
+  visitInformation:{equipamentType: string, equipamentBrand: string, equipamentModel: string, problem: string}[];
+  status: boolean;
   visitDate: string;}
 
 export interface VisitItemProps{
   visitItem: Visit;
 }
 
-  const VisitItem:React.FC<VisitItemProps> = ({visitItem}) => {
+  const Visits:React.FC<VisitItemProps> = ({visitItem}) => {
 
     return (
       <div className='visitItem'>
@@ -27,4 +30,4 @@ export interface VisitItemProps{
     )
 }
 
-export default VisitItem;
+export default Visits;

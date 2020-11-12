@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import api from '../../services/api'
 
-import VisitComponent from '../../components/visitComponent'
-import { Visit } from '../../components/visitItem'
+import VisitComponent from '../../components/visitComplete'
+import { Visit } from '../../components/visits'
 import Title from '../../components/title'
 import { Link } from 'react-router-dom';
 
@@ -14,10 +14,13 @@ const VisitComplete = () => {
   const [visitItem, setVisitItem] = useState({
     id: 0, 
     name: '',
+    document: '',
     adress: '',
     contact: '',
     secondContact: '',
-    visitInformation: [{ equipamentType: '', equipamentModel: '', problem: '', }],
+    technician: '',
+    visitInformation: [{ equipamentType: '', equipamentBrand: '', equipamentModel: '', problem: '', }],
+    status: false,
     visitDate: ''
   });
 
@@ -32,20 +35,26 @@ const VisitComplete = () => {
       const { 
         id, 
         name,
+        document,
         adress,
         contact,
         secondContact,
+        technician,
         visitInformation,
+        status,
         visitDate
       } = response.data;
 
       const data = {
         id,
         name,
+        document,
         adress,
         contact,
         secondContact,
+        technician,
         visitInformation,
+        status,
         visitDate
       }
 

@@ -35,6 +35,9 @@ export default class Visit {
   @Column()
   visitDate: string;
 
+  @Column({type: 'boolean'})
+  status: boolean = false;
+
   @OneToOne(type => PostVisit, postVisit => postVisit.visit)
   postVisit: PostVisit
 }

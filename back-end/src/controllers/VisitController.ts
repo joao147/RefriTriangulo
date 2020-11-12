@@ -12,7 +12,7 @@ export default {
 
     const visitRepository = getRepository(Visit);
 
-    const allVisit = await visitRepository.find({ relations: ['visitInformation'] });
+    const allVisit = await visitRepository.find({ relations: ['visitInformation'], where:{status: 0}});
 
     return response.json(allVisit)
   },
