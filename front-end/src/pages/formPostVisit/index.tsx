@@ -1,4 +1,5 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
+import { useHistory } from 'react-router-dom'
 import { FiPlus } from 'react-icons/fi';
 
 import api from '../../services/api';
@@ -11,10 +12,11 @@ import './style.css';
 
 const FormPostVisit = () => {
 
-  const [visit, setVisit] = useState();
-
+  const [material, setMaterial] = useState([
+    {material: '', materialPrice: 0, guarantee: ''}
+  ]);
   const [laborPrice, setLaborPrice] = useState(0);
-  const [material, setMaterial] = useState([{material: '', materialPrice: 0, guarantee: ''}]);
+  const visitId = Number(window.localStorage.getItem('id'));
 
   const guaranteeOptions =[
     {value:'0 meses', label:'0 meses'},
@@ -23,19 +25,7 @@ const FormPostVisit = () => {
     {value:'12 meses ', label:'12 meses '},
 ]
 
-  async function setVisitData(){
-
-    const id = window.localStorage.getItem('id');
-
-    const url = `visit/${id}`;
-
-    api.get(url).then((response) => {
-
-      setVisit(response.data);
-    })
-  }
-
-  useEffect(() => {setVisitData()}, [])
+  const goBack = useHistory();
 
   function newMaterialItem(){
     setMaterial([
@@ -49,7 +39,6 @@ const FormPostVisit = () => {
       if(position === index){
         return { ...material, [field]: value};
       }
-
       return material;
     })
     setMaterial(updatedMaterial);
@@ -82,8 +71,17 @@ const FormPostVisit = () => {
     }else if(materialValidation){
       alert('Preencha os dados sobre o(s) material(is)');
     }else{
-
       
+      api.post('post_visit', {
+        material,
+        laborPrice,
+        visitId
+      }).then(()=>{
+        alert('Cadastro da visita concluida');
+        goBack.push('/');
+      }).catch(()=>{
+        alert('Ocorreu um erro no cadastro, tentei novamente em 2 minutos!');
+      })
     }
   }
 
@@ -98,9 +96,9 @@ const FormPostVisit = () => {
           <div className="clientData">
 
             <Input 
+              className='number'
               name='laborPrice' 
-              type='currency'
-              pattern="^\R$\d{1,3}(,\d{3})*(\.\d+)?$"
+              type='number'
               label='Preço da mão-de-obra' 
               value={laborPrice}
               onChange={e => {setLaborPrice(Number(e.target.value))}}
@@ -131,6 +129,7 @@ const FormPostVisit = () => {
                 />
 
                 <Input 
+                  className='number'
                   name='materialPrice' 
                   type='number' 
                   label='Preço do material'
@@ -152,7 +151,7 @@ const FormPostVisit = () => {
         </fieldset>
         
         <footer>
-          <button type='submit' className='submit'>Cadastrar Visita</button>
+          <button type='submit' className='submit'>Concluir cadastro da Visita</button>
         </footer>
       </form>
       

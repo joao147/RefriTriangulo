@@ -7,7 +7,7 @@ import { Visit } from '../../components/visitItem'
 import Title from '../../components/title'
 import { Link } from 'react-router-dom';
 
-
+import './style.css'
 
 const VisitComplete = () => {
 
@@ -59,9 +59,11 @@ const VisitComplete = () => {
     <div className='visitComplete'>
       <Title title='Triangulo' to='/visit'/>
       <VisitComponent visitItem={visitItem}/>
-      <Link to={`/visit/postVisit/create/${visitItem.id}`}>
-        <button type='button' >Concluir o cadastro da visita</button>
-      </Link>
+      <div className='helper'>
+        <Link to={`/visit/postVisit/create/${visitItem.id}`} className='visitButton'>
+          <button type='button' >Concluir o cadastro da visita</button>
+        </Link>
+      </div>
     </div>
   );
 }

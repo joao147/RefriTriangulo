@@ -12,21 +12,21 @@ import './styles.css'
 
 function FormVisit() {
 
-  const goBack = useHistory()
+  const goBack = useHistory();
 
-  const [name, setName] = useState('')
-  const [adress, setAdress] = useState('')
-  const [contact, setContact] = useState('')
-  const [secondContact, setSecondContact] = useState('')
+  const [name, setName] = useState('');
+  const [adress, setAdress] = useState('');
+  const [contact, setContact] = useState('');
+  const [secondContact, setSecondContact] = useState('');
   const [visitInformation, setVisitInformation] = useState([
     { equipamentType:'', equipamentModel: '', problem: '' }
-  ])
+  ]);
 
   function newVisitInformationItem(){
     setVisitInformation([
       ...visitInformation,
       { equipamentType:'', equipamentModel: '', problem: '' }
-    ])
+    ]);
   }
 
   function setvisitInformationsValue(position: number, field: string, value: string){
@@ -53,7 +53,7 @@ function FormVisit() {
     visitInformation.forEach((visitInf, index) =>{
       if (visitInf.equipamentType === '' && visitInf.equipamentModel === '' && visitInf.problem === ''){
         if(visitInformation.length > 1)
-          visitInformation.splice(index, 1)
+          visitInformation.splice(index, 1);
       }
     })
   }
@@ -72,10 +72,10 @@ function FormVisit() {
     })
   
     if (name === '' || adress === '' || contact=== ''){
-      alert('preencha todos os dados do cliente')
+      alert('preencha todos os dados do cliente');
     }
     else if(visitInformationValidation){
-      alert('preencha todos os dados do equipamento' )
+      alert('preencha todos os dados do equipamento' );
     }
     else{
 
@@ -87,10 +87,9 @@ function FormVisit() {
         visitInformation
       }).then(() => {
         alert('Visita cadastrada com sucesso!');
-
         goBack.push('/');
       }).catch(() => {
-        alert('Ocorreu algum erro, tente de novo em 2 minutos!');
+        alert('Ocorreu um erro no cadastro, tentei novamente em 2 minutos!');
       });
     } 
   }

@@ -40,7 +40,7 @@ export default {
 
     material.forEach((material: Material) => {totalPrice = totalPrice + material.materialPrice})
 
-    const visit = await getRepository(Visit).findOne(visitId);
+    const visit = await getRepository(Visit).findOneOrFail(visitId);
 
     const data = {
       material,
