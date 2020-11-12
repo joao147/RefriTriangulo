@@ -11,7 +11,7 @@ export default class Material {
   @Column()
   material: string;
 
-  @Column()
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   materialPrice: number;
 
   @Column()

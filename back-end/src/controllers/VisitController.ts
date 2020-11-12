@@ -32,9 +32,11 @@ export default {
 
     const {
       name,
+      document,
       adress,
       contact,
       secondContact,
+      technician,
       visitInformation
     } = request.body;
 
@@ -42,20 +44,25 @@ export default {
 
     const data = {
       name,
+      document,
       adress,
       contact, 
       secondContact,
+      technician,
       visitInformation,
       visitDate
     }
 
     const schema = Yup.object().shape({
       name: Yup.string().required(),
+      document: Yup.string().required(),
       adress: Yup.string().required(),
       contact: Yup.string().required(),
       secondContact: Yup.string().notRequired(),
+      technician: Yup.string().required(),
       visitInformation: Yup.array(Yup.object().shape({
         equipamentType: Yup.string().required(),
+        equipamentBrand: Yup.string().required(),
         equipamentModel: Yup.string().required(),
         problem: Yup.string().required(),
       })), 

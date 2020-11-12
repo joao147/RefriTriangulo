@@ -19,6 +19,10 @@ export class visit1604433683580 implements MigrationInterface {
           type: 'varchar'
         },
         {
+          name: 'document',
+          type: 'varchar'
+        },
+        {
           name: 'adress',
           type: 'varchar'
         },
@@ -30,6 +34,10 @@ export class visit1604433683580 implements MigrationInterface {
           name: 'secondContact',
           type: 'varchar',
           isNullable: true
+        },
+        {
+          name: 'technician',
+          type: 'varchar'
         },
         {
           name: 'visitDate',

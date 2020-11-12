@@ -16,13 +16,13 @@ export class material1604433750921 implements MigrationInterface {
         },
         {
           name: 'material',
-          type: 'varchar'
+          type: 'varchar',
         },
         {
           name: 'materialPrice',
           type: 'decimal',
-          scale: 2,
-          precision: 6
+          precision: 10,
+          scale: 2
         },
         {
           name: 'guarantee',

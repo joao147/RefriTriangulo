@@ -16,7 +16,7 @@ const VisitComponent: React.FC<VisitItemProps> = (({visitItem}) => {
 
       </header>
 
-      <main>
+      <main className='main'>
 
         <p>Endereço: {visitItem.adress}</p>
 

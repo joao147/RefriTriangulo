@@ -16,14 +16,14 @@ export class postVisit1604433722610 implements MigrationInterface {
         {
           name: 'laborPrice',
           type: 'decimal',
-          scale: 2,
-          precision: 6
+          precision: 10,
+          scale: 2
         },
         {
           name: 'totalPrice',
           type: 'decimal',
-          scale: 2,
-          precision: 6
+          precision: 10,
+          scale: 2
         },
       ]
     }))

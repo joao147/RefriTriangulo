@@ -14,10 +14,10 @@ export default class PostVisit {
   })
   material: Material[];
 
-  @Column()
-  laborPrice: number;
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  laborPrice: number;  
 
-  @Column()
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   totalPrice: number;
 
   @OneToOne(type => Visit, visit => visit.postVisit)

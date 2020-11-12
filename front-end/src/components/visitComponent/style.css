@@ -22,7 +22,7 @@ header{
   justify-content: center;
 }
 
-main{
+.main{
   margin-bottom: 50px;
 
   display: flex;

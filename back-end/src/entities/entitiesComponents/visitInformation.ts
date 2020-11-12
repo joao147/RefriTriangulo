@@ -12,6 +12,9 @@ export default class VisitInformation {
   equipamentType: string;
 
   @Column()
+  equipamentBrand: string;
+
+  @Column()
   equipamentModel: string;
 
   @Column()

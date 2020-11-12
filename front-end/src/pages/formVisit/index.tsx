@@ -15,17 +15,19 @@ function FormVisit() {
   const goBack = useHistory();
 
   const [name, setName] = useState('');
+  const [document, setDocument] = useState('');
   const [adress, setAdress] = useState('');
   const [contact, setContact] = useState('');
   const [secondContact, setSecondContact] = useState('');
+  const [technician, setTechnician] = useState('');
   const [visitInformation, setVisitInformation] = useState([
-    { equipamentType:'', equipamentModel: '', problem: '' }
+    { equipamentType:'', equipamentBrand:'', equipamentModel: '', problem: '' }
   ]);
 
   function newVisitInformationItem(){
     setVisitInformation([
       ...visitInformation,
-      { equipamentType:'', equipamentModel: '', problem: '' }
+      { equipamentType:'', equipamentBrand:'', equipamentModel: '', problem: '' }
     ]);
   }
 
@@ -51,7 +53,7 @@ function FormVisit() {
 
   function visitInformationCheck(){
     visitInformation.forEach((visitInf, index) =>{
-      if (visitInf.equipamentType === '' && visitInf.equipamentModel === '' && visitInf.problem === ''){
+      if (visitInf.equipamentType === '' && visitInf.equipamentBrand === '' && visitInf.equipamentModel === '' && visitInf.problem === ''){
         if(visitInformation.length > 1)
           visitInformation.splice(index, 1);
       }
@@ -66,24 +68,27 @@ function FormVisit() {
     var visitInformationValidation = false;
 
     visitInformation.forEach(visitInf => {
-      if (visitInf.equipamentType === '' || visitInf.equipamentModel === '' || visitInf.problem === ''){
+      if (visitInf.equipamentType === '' || visitInf.equipamentBrand === '' || visitInf.equipamentModel === '' || visitInf.problem === ''){
         visitInformationValidation = true;
       }
     })
   
-    if (name === '' || adress === '' || contact=== ''){
+    if (name === '' || document === '' || adress === '' || contact === ''){
       alert('preencha todos os dados do cliente');
-    }
-    else if(visitInformationValidation){
+    }else if(technician === ''){
+      alert('preencha o nome do tecnico' );
+    }else if(visitInformationValidation){
       alert('preencha todos os dados do equipamento' );
     }
     else{
 
       api.post('visit', {
         name,
+        document,
         adress,
         contact,
         secondContact,
+        technician,
         visitInformation
       }).then(() => {
         alert('Visita cadastrada com sucesso!');
@@ -114,6 +119,14 @@ function FormVisit() {
             />
 
             <Input 
+              name='document' 
+              type='text' 
+              label='CPF/CNPJ'
+              value={document}
+              onChange={e => {setDocument(e.target.value)}}
+            />
+
+            <Input 
               name='adress' 
               type='text' 
               label='Endereço da visita' 
@@ -136,6 +149,15 @@ function FormVisit() {
               value={secondContact}
               onChange={e => {setSecondContact(e.target.value)}}
             />
+
+            <Input 
+              name='technician' 
+              type='text' 
+              label='Nome do Tecnico' 
+              value={technician}
+              onChange={e => {setTechnician(e.target.value)}}
+            />
+
           </div>
 
         </fieldset>
@@ -159,6 +181,14 @@ function FormVisit() {
                   options={equipamentOptions}
                   value={visitInf.equipamentType}
                   onChange={e => setvisitInformationsValue(index, 'equipamentType', e.target.value)}
+                />
+
+                <Input 
+                  name='equipamentBrand' 
+                  type='text' 
+                  label='Marca do equipamento'
+                  value={visitInf.equipamentBrand}
+                  onChange={e => setvisitInformationsValue(index, 'equipamentBrand', e.target.value)}
                 />
 
                 <Input 

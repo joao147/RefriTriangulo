@@ -12,7 +12,7 @@ export default {
 
     const postVisitRepository = await getRepository(PostVisit);
 
-    const allPostVitis = await postVisitRepository.find({ relations: ['visit', 'material'] });
+    const allPostVitis = await postVisitRepository.find({ relations: ['visit', 'material'],  });
 
     return response.json(allPostVitis);
   },
@@ -36,9 +36,9 @@ export default {
       visitId
     } = request.body;
 
-    var totalPrice = laborPrice;
+    var totalPrice = Number(laborPrice);
 
-    material.forEach((material: Material) => {totalPrice = totalPrice + material.materialPrice})
+    material.forEach((material: Material) => {totalPrice = totalPrice + Number(material.materialPrice)})
 
     const visit = await getRepository(Visit).findOneOrFail(visitId);
 

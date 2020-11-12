@@ -151,7 +151,7 @@ const FormPostVisit = () => {
         </fieldset>
         
         <footer>
-          <button type='submit' className='submit'>Concluir cadastro da Visita</button>
+          <button type='submit' className='submit'>Concluir Visita</button>
         </footer>
       </form>
       

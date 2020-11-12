@@ -13,6 +13,9 @@ export default class Visit {
   name: string;
 
   @Column()
+  document: string;
+
+  @Column()
   adress: string;
 
   @Column()
@@ -20,6 +23,9 @@ export default class Visit {
 
   @Column()
   secondContact: string;
+
+  @Column()
+  technician: string;
 
   @OneToMany(type => VisitInformation, visitInformation => visitInformation.visit, {
     cascade:['insert', 'update']

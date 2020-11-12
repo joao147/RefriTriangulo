@@ -19,6 +19,10 @@ export class visitInformation1604433739504 implements MigrationInterface {
           type: 'varchar'
         },
         {
+          name: 'equipamentBrand',
+          type: 'varchar'
+        },
+        {
           name: 'equipamentModel',
           type: 'varchar',
         },
