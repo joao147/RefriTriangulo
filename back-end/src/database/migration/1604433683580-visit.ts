@@ -42,6 +42,10 @@ export class visit1604433683580 implements MigrationInterface {
         {
           name: 'visitDate',
           type: 'varchar'
+        },
+        {
+          name: 'visitHour',
+          type: 'varchar'
         }
       ]
     }))

@@ -1,4 +1,6 @@
 .postVisits-page{
+  overflow: auto;
+
   width: 100vw;
  
   margin: auto;

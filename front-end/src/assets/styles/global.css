@@ -1,7 +1,6 @@
 :root {
     --color-text-in: rgb(0, 0, 0);
     --color-background: rgb(180, 123, 123);
-    --color-background-in: rgb(151, 64, 64);
     --color-border:gray;
 
     font-size: 60%;

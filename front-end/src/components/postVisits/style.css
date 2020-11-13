@@ -1,0 +1,35 @@
+.postVisitItem{
+  width: 70vw;
+  
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 0.8rem;
+  margin-top: 2.4rem;
+  overflow: hidden;
+}
+
+main{
+  width: 100%;
+
+  margin: 6px 0;
+
+  padding-left: 5px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+p{
+  margin-bottom: 3px;
+  font: 500 19px Ubuntu;
+  text-align: start;
+}
+
+span{
+  font: 500 17px Ubuntu;
+}
+
+.link{
+  text-decoration: none;
+  color: black;
+}

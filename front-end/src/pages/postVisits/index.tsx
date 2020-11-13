@@ -31,7 +31,9 @@ const PostVisits = () => {
       {postVisits.map((postVisitItem: PostVisit, index) => {
         return (
           <div className="helper" key={index}>
-            <PostVisitItem postVisit={postVisitItem}/>
+            <Link to={`postVisit/${postVisitItem.visit.id}`} className='link' onClick={()=>{setId(postVisitItem.visit.id)}}>
+              <PostVisitItem postVisit={postVisitItem}/>
+            </Link>
           </div>
         )
       })}

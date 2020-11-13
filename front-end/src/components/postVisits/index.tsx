@@ -4,8 +4,10 @@ import './style.css'
 
 export interface PostVisit{
   visit: {
+    id:number;
     name: string;
     visitDate: string;
+    visitHour: string;
   }
 }
 
@@ -20,6 +22,7 @@ const PostVisits: React.FC<PostVisitItemProps> = ({postVisit}) => {
       <main>
         <p className='name'>Nome do cliente: {postVisit.visit.name}</p>
         <span className='date'>Data da visita: {postVisit.visit.visitDate}</span>
+        <span className='date'>horário da visita: {postVisit.visit.visitHour}</span>
       </main>
     </div>
   )

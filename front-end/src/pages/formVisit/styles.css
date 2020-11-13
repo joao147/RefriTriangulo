@@ -1,3 +1,7 @@
+.formVisit{
+  overflow: auto;
+}
+
 form{
   width: 90vw;
   padding: 10px 10px;

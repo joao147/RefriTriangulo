@@ -35,6 +35,9 @@ export default class Visit {
   @Column()
   visitDate: string;
 
+  @Column()
+  visitHour: string;
+
   @Column({type: 'boolean'})
   status: boolean = false;
 

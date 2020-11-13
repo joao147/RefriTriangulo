@@ -12,7 +12,9 @@ export interface Visit{
   technician: string;
   visitInformation:{equipamentType: string, equipamentBrand: string, equipamentModel: string, problem: string}[];
   status: boolean;
-  visitDate: string;}
+  visitDate: string;
+  visitHour: string;
+}
 
 export interface VisitItemProps{
   visitItem: Visit;
@@ -25,6 +27,7 @@ export interface VisitItemProps{
           <main>
             <p className='name'>Nome do cliente: {visitItem.name}</p>
             <span className='date'>Data da visita: {visitItem.visitDate}</span>
+            <span className='date'>Horário da visita: {visitItem.visitHour}</span>
           </main>
       </div>
     )

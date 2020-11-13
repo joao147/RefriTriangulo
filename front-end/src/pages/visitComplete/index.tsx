@@ -21,7 +21,8 @@ const VisitComplete = () => {
     technician: '',
     visitInformation: [{ equipamentType: '', equipamentBrand: '', equipamentModel: '', problem: '', }],
     status: false,
-    visitDate: ''
+    visitDate: '',
+    visitHour: ''
   });
 
   const id = window.localStorage.getItem('id');
@@ -42,7 +43,8 @@ const VisitComplete = () => {
         technician,
         visitInformation,
         status,
-        visitDate
+        visitDate,
+        visitHour
       } = response.data;
 
       const data = {
@@ -55,7 +57,8 @@ const VisitComplete = () => {
         technician,
         visitInformation,
         status,
-        visitDate
+        visitDate,
+        visitHour
       }
 
       setVisitItem(data)

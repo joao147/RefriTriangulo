@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+import Landing from './pages/landing';
 import FormVisit from './pages/formVisit'
 import FormPostVisit from './pages/formPostVisit';
-import Landing from './pages/landing';
 import Visits from './pages/visits';
-import VisitComplete from './pages/visitComplete'
 import PostVisits from './pages/postVisits'
+import VisitComplete from './pages/visitComplete'
+import PostVisitComplete from './pages/postVisitComplete'
 
 const Routes = () => {
   
@@ -19,6 +20,7 @@ const Routes = () => {
         <Route path="/visit" exact component={Visits}/>
         <Route path="/visit/:id" exact component={VisitComplete}/>
         <Route path="/postVisit" exact component={PostVisits}/>
+        <Route path="/postVisit/:id" exact component={PostVisitComplete}/>
       </Switch>
     </BrowserRouter>
   )

@@ -8,9 +8,9 @@ import Title from '../../components/title';
 const Landing = () => {
 
   return (
-    <div>
+    <div className='landing-page'>
       <Title title='Triangulo' goback={false}/>
-      <main className='landing-page'>
+      <main className='landing'>
         <Link to='visit/create' className='createVisit'>Cadastrar Visita<FiHome size={40} color='000'/></Link>
         <Link to='visit' className='visitss'>Ver Visitas em Aberto<FiClipboard size={40} color='000'/></Link>
         <Link to='postVisit' className='postVisits'>Ver Base de Dados de Visitas<FiArchive size={40} color='000'/></Link>

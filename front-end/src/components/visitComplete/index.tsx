@@ -15,6 +15,7 @@ const VisitComponent: React.FC<VisitItemProps> = (({visitItem}) => {
         <p className='name'>CPF/CNPJ: {visitItem.document}</p>
 
         <span className='date'>Data da visita: {visitItem.visitDate}</span>
+        <span className='date'>Horário da visita: {visitItem.visitHour}</span>
 
       </header>
 

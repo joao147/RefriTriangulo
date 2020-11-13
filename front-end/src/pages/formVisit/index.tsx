@@ -100,7 +100,7 @@ function FormVisit() {
   }
 
   return (
-    <div className='App'>
+    <div className='formVisit'>
       <Title title='Triangulo'/>
 
       <form onSubmit={handlerSubmit}>

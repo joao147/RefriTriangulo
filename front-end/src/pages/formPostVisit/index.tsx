@@ -86,7 +86,7 @@ const FormPostVisit = () => {
   }
 
   return (
-    <div className="postVisit">
+    <div className="formPostVisit">
       <Title title='Triangulo' to={`/visit/0`}/>
 
       <form onSubmit={handlerSubmit}>

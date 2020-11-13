@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import Visit from '../entities/visit'
 
 import getDateToString from '../util/getDateToString'
+import getHourToString from '../util/getHourToString'
 
 export default {
 
@@ -42,6 +43,8 @@ export default {
 
     const visitDate = getDateToString(new Date());
 
+    const visitHour = getHourToString(new Date());
+
     const data = {
       name,
       document,
@@ -50,7 +53,8 @@ export default {
       secondContact,
       technician,
       visitInformation,
-      visitDate
+      visitDate,
+      visitHour
     }
 
     const schema = Yup.object().shape({
@@ -66,7 +70,8 @@ export default {
         equipamentModel: Yup.string().required(),
         problem: Yup.string().required(),
       })), 
-      visitDate: Yup.string().required()   
+      visitDate: Yup.string().required(),
+      visitHour: Yup.string().required(),
     })
 
     await schema.isValid(data, {

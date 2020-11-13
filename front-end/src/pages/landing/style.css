@@ -1,4 +1,9 @@
 .landing-page{
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.landing{
   width: 100vw;
   height: 100vh;
 

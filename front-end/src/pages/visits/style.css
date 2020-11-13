@@ -1,4 +1,10 @@
+.visits-page{
+  overflow: auto;
+  }
+
 .visits{
+  overflow: auto;
+
   width: 100vw;
  
   margin: auto;
