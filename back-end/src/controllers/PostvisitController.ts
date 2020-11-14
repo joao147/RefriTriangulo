@@ -9,19 +9,38 @@ import Visit from '../entities/visit'
 export default {
 
   async index(request: Request, response: Response) {
+    
+    const filters = request.query;
 
-    if(request.query !== undefined) {
-      const filters = request.query;
-
-      const name = filters.name as string;
-      const visitDate = filters.visitDate as string;
-    }
-
-
+    const name = filters.name as string;
+    const visitDate = filters.visitDate as string;
 
     const postVisitRepository = await getRepository(PostVisit);
 
-    const allPostVitis = await postVisitRepository.find({ relations: [ 'visit', 'material', 'visit.visitInformation' ] });
+    var allPostVitis;
+
+    if(name !== '' && visitDate !== ''){
+      allPostVitis = await postVisitRepository.find({ 
+        relations: [ 'visit', 'material', 'visit.visitInformation' ],
+        where: { visit: { name, visitDate } }
+      });
+    }else if (name !== ''){
+      allPostVitis = await postVisitRepository.find({ 
+        relations: [ 'visit', 'material', 'visit.visitInformation' ],
+        where: { visit:{ name } }
+      });
+    }else if (visitDate !== ''){
+      allPostVitis = await postVisitRepository.find({ 
+        relations: [ 'visit', 'material', 'visit.visitInformation' ],
+        where: { visit: { visitDate } }
+      });
+    }else {
+      allPostVitis = await postVisitRepository.find({ 
+        relations: [ 'visit', 'material', 'visit.visitInformation' ]
+      });
+    }
+
+    console.log(allPostVitis)
 
     return response.json(allPostVitis);
   },

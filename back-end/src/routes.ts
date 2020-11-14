@@ -1,7 +1,7 @@
 import {Router} from 'express'
 
 import VisitController from './controllers/VisitController';
-import PostVisitController from './controllers/PostVisitController';
+import PostVisitController from './controllers/PostvisitController';
 
 const routes = Router();
 

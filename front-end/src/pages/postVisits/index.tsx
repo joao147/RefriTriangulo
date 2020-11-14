@@ -17,9 +17,10 @@ const PostVisits = () => {
   const [postVisits, setPostVisits] = useState([]);
   const [name, setName] = useState('');
   const [visitDate, setVisitDate] = useState('');
+  var date = visitDate;
   
   async function getPostVisits(){
-    api.get('post_visit').then((response) => {setPostVisits(response.data)})
+    api.get('post_visit', {params:{ name, visitDate }}).then((response) => {setPostVisits(response.data)})
   }
 
   function setId(id: number){
@@ -31,21 +32,21 @@ const PostVisits = () => {
 
   useEffect(()=> {getPostVisits()}, []);
 
-  function handlerFilter(){
+  async function handlerFilter(){
+
     if( name === '' && visitDate === '' ){
+
       alert('Preencher nome do cliente ou data da visita')
-    }else if(name === ''){
 
-      setVisitDate(convertDate(String(visitDate)));
-
-      alert('Preencher nome do cliente')
-    }else if(visitDate === ''){
-      
-      alert('Preencher data da visita')
     }else {
+      
+      date = convertDate(visitDate);
 
-      setVisitDate(convertDate(String(visitDate)));
-      alert('Preencher')
+      await api.get('post_visit', {params: { name, visitDate: date }})
+      .then((response)=>{
+        // setPostVisits(response.data);
+        console.log((response.data));
+      })
     }
   }
 
@@ -80,7 +81,7 @@ const PostVisits = () => {
           onChange={(e)=>{setVisitDate(e.target.value)}}
         />
 
-        <button className='button-filter' onClick={handlerFilter}>
+        <button className='button-filter' type='button' onClick={handlerFilter}>
           filtrar
         </button>
 
