@@ -10,7 +10,9 @@ export interface Visit{
   contact: string;
   secondContact?: string;
   technician: string;
-  visitInformation:{equipamentType: string, equipamentBrand: string, equipamentModel: string, problem: string}[];
+  visitInformation:{
+    equipamentType: string, equipamentBrand: string, equipamentModel: string, problem: string
+  }[];
   status: boolean;
   visitDate: string;
   visitHour: string;

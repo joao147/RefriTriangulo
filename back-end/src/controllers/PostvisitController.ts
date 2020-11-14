@@ -10,9 +10,18 @@ export default {
 
   async index(request: Request, response: Response) {
 
+    if(request.query !== undefined) {
+      const filters = request.query;
+
+      const name = filters.name as string;
+      const visitDate = filters.visitDate as string;
+    }
+
+
+
     const postVisitRepository = await getRepository(PostVisit);
 
-    const allPostVitis = await postVisitRepository.find({ relations: ['visit', 'material', 'visit.visitInformation'] });
+    const allPostVitis = await postVisitRepository.find({ relations: [ 'visit', 'material', 'visit.visitInformation' ] });
 
     return response.json(allPostVitis);
   },
@@ -23,7 +32,7 @@ export default {
 
     const { id } = request.params;
 
-    const postVisit = await postVisitRepository.findOneOrFail(id, { relations: ['visit', 'material'] });
+    const postVisit = await postVisitRepository.findOneOrFail(id, { relations: [ 'visit', 'material', 'visit.visitInformation' ] });
 
     return response.json(postVisit);
   },

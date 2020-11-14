@@ -19,6 +19,7 @@
 
 .button-addItem{
   width: 40vw;
+  height: auto;
 
   display: flex;
   flex-direction: row;

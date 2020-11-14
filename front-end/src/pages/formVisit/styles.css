@@ -37,6 +37,9 @@ fieldset + fieldset{
 }
 
 .button-addItem{
+
+  height: auto;
+
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -68,6 +71,8 @@ footer{
 }
 
 .submit{
+  height: auto;
+
   font: 500 21px Ubuntu;
   width: 50%;
   height: 30px;

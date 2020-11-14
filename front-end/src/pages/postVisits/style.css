@@ -10,3 +10,37 @@
   align-items: center;
   justify-content: center;
 }
+
+.filter{
+  width: 70vw;
+  height: auto;
+
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: antiquewhite;
+}
+
+.p-filter{
+  width: 45vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.input-filter{
+  width: 60vw;
+  margin: auto;
+}
+
+.button-filter{
+  width: 40vw;
+  margin: 15px 0;
+}

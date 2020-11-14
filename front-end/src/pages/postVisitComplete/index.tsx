@@ -21,11 +21,11 @@ const PostVisitComplete = () => {
       contact: '',
       secondContact: '',
       technician: '',
-      visitInformation: [{ 
-        equipamentType: '', 
-        equipamentBrand: '', 
-        equipamentModel: '', 
-        problem: ''  
+      visitInformation: [{
+        equipamentType: '',
+        equipamentBrand: '',
+        equipamentModel: '',
+        problem: ''
       }],
       status: true,
       visitDate: '',
@@ -40,22 +40,28 @@ const PostVisitComplete = () => {
 
   const id = window.localStorage.getItem('id');
 
-  const url = `visit/${id}`;
+  const url = `post_visit/${id}`;
 
   async function setPostVisitData(){
 
     await api.get(url)
-    .then((response) => {setPostVisit(response.data)})
+    .then((response) => {setPostVisit(response.data);})
   }
 
   useEffect(()=>{setPostVisitData()},[])
-
-  console.log(postVisit)
-
+  
   return (
-    <div className="postVisitComplete">
+
+    <div className='postVisitComplete'>
+
       <Title title='Triangulo' to='/postVisit'/>
-      <PostVisitItem postVisitItem={postVisit}/>
+
+      <div className="helper">
+
+        <PostVisitItem postVisitItem={postVisit}/>
+
+      </div>
+      
     </div>
   )
 }
