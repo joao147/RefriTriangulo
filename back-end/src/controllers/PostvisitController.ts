@@ -36,11 +36,10 @@ export default {
       });
     }else {
       allPostVitis = await postVisitRepository.find({ 
-        relations: [ 'visit', 'material', 'visit.visitInformation' ]
+        relations: [ 'visit', 'material', 'visit.visitInformation' ],
+        where: { visit: { id:1 } }
       });
     }
-
-    console.log(allPostVitis)
 
     return response.json(allPostVitis);
   },
