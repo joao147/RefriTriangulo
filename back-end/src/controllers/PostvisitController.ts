@@ -20,27 +20,31 @@ export default {
     var allPostVitis;
 
     if(name !== '' && visitDate !== ''){
-      allPostVitis = await postVisitRepository.find({ 
-        relations: [ 'visit', 'material', 'visit.visitInformation' ],
-        where: { visit: { name, visitDate } }
-      });
+      allPostVitis = await postVisitRepository.createQueryBuilder('post_visit')
+      .leftJoinAndSelect('post_visit.visit', 'visit')
+      .where('visit.name LIKE :name', { name: `${name}%` })
+      .andWhere('visit.visitDate = :visitDate', { visitDate })
+      .getMany();
+      
     }else if (name !== ''){
-      allPostVitis = await postVisitRepository.find({ 
-        relations: [ 'visit', 'material', 'visit.visitInformation' ],
-        where: { visit:{ name } }
-      });
+      allPostVitis = await postVisitRepository.createQueryBuilder('post_visit')
+      .leftJoinAndSelect('post_visit.visit', 'visit')
+      .where('visit.name LIKE :name', { name: `${name}%` })
+      .getMany();
+
     }else if (visitDate !== ''){
-      allPostVitis = await postVisitRepository.find({ 
-        relations: [ 'visit', 'material', 'visit.visitInformation' ],
-        where: { visit: { visitDate } }
-      });
+      allPostVitis = await postVisitRepository.createQueryBuilder('post_visit')
+      .leftJoinAndSelect('post_visit.visit', 'visit')
+      .where('visit.visitDate = :visitDate', { visitDate })
+      .getMany();
+
     }else {
       allPostVitis = await postVisitRepository.find({ 
-        relations: [ 'visit', 'material', 'visit.visitInformation' ],
-        where: { visit: { id:1 } }
+        relations: [ 'visit', 'material', 'visit.visitInformation' ]
       });
     }
 
+    console.log(allPostVitis)
     return response.json(allPostVitis);
   },
 

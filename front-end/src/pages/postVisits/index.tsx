@@ -39,13 +39,13 @@ const PostVisits = () => {
       alert('Preencher nome do cliente ou data da visita')
 
     }else {
-      
-      date = convertDate(visitDate);
+      if(visitDate !== ''){
+        date = convertDate(visitDate);
+      }
 
       await api.get('post_visit', {params: { name, visitDate: date }})
       .then((response)=>{
-        // setPostVisits(response.data);
-        console.log((response.data));
+        setPostVisits(response.data);
       })
     }
   }
