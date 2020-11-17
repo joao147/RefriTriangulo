@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useCallback, useState } from 'react';
 import { useHistory } from 'react-router-dom'
 import { FiPlus } from 'react-icons/fi';
 
@@ -65,7 +65,7 @@ const FormPostVisit = () => {
           materialValidation = true;
       }
     })
-
+    
     if(laborPrice === 0){
       alert('Preencha o preço da mão-de-obra');
     }else if(materialValidation){
@@ -99,7 +99,7 @@ const FormPostVisit = () => {
               className='number'
               name='laborPrice' 
               type='number'
-              label='Preço da mão-de-obra' 
+              label='Preço da mão-de-obra'
               value={laborPrice}
               onChange={e => {setLaborPrice(Number(e.target.value))}}
             />

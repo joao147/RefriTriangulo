@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom'
 import { FiPlus } from 'react-icons/fi';
 
@@ -60,6 +60,58 @@ function FormVisit() {
     })
   }
 
+  const handlerDocument = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+    
+    let value = e.currentTarget.value;
+
+    if(value.length <= 14){
+      value = value.replace(/\D/g, "");
+      value = value.replace(/(\d{3})(\d)/,"$1.$2");
+      value = value.replace(/(\d{3})(\d)/, "$1.$2");
+      value = value.replace(/(\d{3})(\d{1,2})/, "$1-$2");
+    }else if(value.length > 14){
+      value = value.replace(/\D/g,"")
+      value = value.replace(/^(\d{2})(\d)/,"$1.$2")
+      value = value.replace(/^(\d{2})\.(\d{3})(\d)/,"$1.$2.$3")
+      value = value.replace(/\.(\d{3})(\d)/,".$1/$2")
+      value = value.replace(/(\d{4})(\d)/,"$1-$2")
+  }
+
+    setDocument(value);
+  },[])
+
+  const handlerContact = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+    
+    let value = e.currentTarget.value;
+
+    if(value.length <= 10){
+      value = value.replace(/\D/g, "");
+      value = value.replace(/(\d{5})(\d)/,"$1-$2");
+    }else if(value.length > 10){
+      value = value.replace(/\D/g,"")
+      value = value.replace(/^(\d{2})(\d)/,"($1) $2")
+      value = value.replace(/(\d{5})(\d)/,"$1-$2");
+  }
+
+    setContact(value);
+  },[])
+
+  const handlerSecondContact = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+    
+    let value = e.currentTarget.value;
+
+    if(value.length <= 10){
+      value = value.replace(/\D/g, "");
+      value = value.replace(/(\d{5})(\d)/,"$1-$2");
+    }else if(value.length > 10){
+      value = value.replace(/\D/g,"")
+      value = value.replace(/^(\d{2})(\d)/,"($1) $2")
+      value = value.replace(/(\d{5})(\d)/,"$1-$2");
+  }
+
+    setSecondContact(value);
+  },[])
+
   function handlerSubmit(e: FormEvent) {
     e.preventDefault()
 
@@ -109,7 +161,7 @@ function FormVisit() {
 
           <legend className='legend'>Informações sobre cliente</legend>
 
-          <div className="clientData">
+          <div className='clientData'>
             <Input 
               name='name' 
               type='text' 
@@ -122,6 +174,8 @@ function FormVisit() {
               name='document' 
               type='text' 
               label='CPF/CNPJ'
+              maxLength={18}
+              onKeyUp={handlerDocument}
               value={document}
               onChange={e => {setDocument(e.target.value)}}
             />
@@ -138,6 +192,8 @@ function FormVisit() {
               name='contact'
               type='text' 
               label='Contato' 
+              maxLength={15}
+              onKeyUp={handlerContact}
               value={contact}
               onChange={e => {setContact(e.target.value)}}
             />
@@ -146,6 +202,8 @@ function FormVisit() {
               name='secondContact' 
               type='text' 
               label='Contato opcional' 
+              maxLength={15}
+              onKeyUp={handlerSecondContact}
               value={secondContact}
               onChange={e => {setSecondContact(e.target.value)}}
             />
