@@ -68,6 +68,7 @@ export default {
         equipamentType: Yup.string().required(),
         equipamentBrand: Yup.string().required(),
         equipamentModel: Yup.string().required(),
+        equipamentSerie: Yup.string().required(),
         problem: Yup.string().required(),
       })), 
       visitDate: Yup.string().required(),

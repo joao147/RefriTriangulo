@@ -21,12 +21,12 @@ main{
 
 p{
   margin-bottom: 3px;
-  font: 500 19px Ubuntu;
+  font: 500 14px Ubuntu;
   text-align: start;
 }
 
 span{
-  font: 500 17px Ubuntu;
+  font: 500 12px Ubuntu;
 }
 
 .link{

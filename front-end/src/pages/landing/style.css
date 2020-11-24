@@ -35,10 +35,10 @@
 }
 
 .createVisit, .postVisits, .visitss{
-  width: 70vw;
-  height: 20vh;
+  width: 65vw;
+  height: 18vh;
 
-  font: 500 30px Ubuntu;
+  font: 500 25px Ubuntu;
   color: black;
   text-decoration: none;
   text-align: center;

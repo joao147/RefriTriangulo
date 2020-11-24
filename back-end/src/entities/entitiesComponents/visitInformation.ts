@@ -8,16 +8,19 @@ export default class VisitInformation {
   @PrimaryGeneratedColumn('increment')
   id:number;
   
-  @Column()
+  @Column({ length: '20' })
   equipamentType: string;
 
-  @Column()
+  @Column({ length: '50' })
   equipamentBrand: string;
 
-  @Column()
+  @Column({ length: '50' })
   equipamentModel: string;
 
-  @Column()
+  @Column({ length: '50' })
+  equipamentSerie: string;
+
+  @Column({ length: '50' })
   problem: string;
 
   @ManyToOne(type => Visit, visit => visit.visitInformation)

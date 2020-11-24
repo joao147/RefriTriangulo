@@ -21,13 +21,13 @@ function FormVisit() {
   const [secondContact, setSecondContact] = useState('');
   const [technician, setTechnician] = useState('');
   const [visitInformation, setVisitInformation] = useState([
-    { equipamentType:'', equipamentBrand:'', equipamentModel: '', problem: '' }
+    { equipamentType:'', equipamentBrand:'', equipamentModel: '', equipamentSerie: '', problem: '' }
   ]);
 
   function newVisitInformationItem(){
     setVisitInformation([
       ...visitInformation,
-      { equipamentType:'', equipamentBrand:'', equipamentModel: '', problem: '' }
+      { equipamentType:'', equipamentBrand:'', equipamentModel: '', equipamentSerie: '', problem: '' }
     ]);
   }
 
@@ -53,7 +53,9 @@ function FormVisit() {
 
   function visitInformationCheck(){
     visitInformation.forEach((visitInf, index) =>{
-      if (visitInf.equipamentType === '' && visitInf.equipamentBrand === '' && visitInf.equipamentModel === '' && visitInf.problem === ''){
+      if ( visitInf.equipamentType === '' && visitInf.equipamentBrand === '' && 
+      visitInf.equipamentModel === '' && visitInf.equipamentSerie === '' && visitInf.problem === '')
+      {
         if(visitInformation.length > 1)
           visitInformation.splice(index, 1);
       }
@@ -255,6 +257,14 @@ function FormVisit() {
                   label='Modelo do equipamento'
                   value={visitInf.equipamentModel}
                   onChange={e => setvisitInformationsValue(index, 'equipamentModel', e.target.value)}
+                />
+
+                <Input 
+                  name='equipamentSerie' 
+                  type='text' 
+                  label='Serie/Padrão do equipamento'
+                  value={visitInf.equipamentSerie}
+                  onChange={e => setvisitInformationsValue(index, 'equipamentSerie', e.target.value)}
                 />
 
                 <Input 

@@ -8,13 +8,13 @@ export default class Material {
   @PrimaryGeneratedColumn('increment')
   id:number;
   
-  @Column()
+  @Column({ length: '50' })
   material: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   materialPrice: number;
 
-  @Column()
+  @Column({ length: '10' })
   guarantee: string;
 
   @ManyToOne(type => PostVisit, postVisit => postVisit.material)

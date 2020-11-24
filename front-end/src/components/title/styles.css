@@ -1,16 +1,17 @@
 .title{
   margin: 4% auto;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
 .goback{
   position: absolute;
-  top: 5%;
-  left: 6.5%;
+  top: 30px;
+  left: 30px;
 }
 
 h1{
-  font: 500 4rem Ubuntu;
+  font: 500 35px Ubuntu;
 }

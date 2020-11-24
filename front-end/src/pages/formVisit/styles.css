@@ -26,7 +26,7 @@ fieldset + fieldset{
 }
 
 .legend{
-  font: 700 26px Ubuntu;
+  font: 700 21px Ubuntu;
 
   display: flex;
   flex-direction: row;
@@ -73,7 +73,7 @@ footer{
 .submit{
   height: auto;
 
-  font: 500 21px Ubuntu;
+  font: 500 16px Ubuntu;
   width: 50%;
   height: 30px;
 

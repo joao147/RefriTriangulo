@@ -9,22 +9,22 @@ export default class Visit {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column()
+  @Column({ length:'100' })
   name: string;
 
-  @Column()
+  @Column({ length:'20' })
   document: string;
 
-  @Column()
+  @Column({ length:'100' })
   adress: string;
 
-  @Column()
+  @Column({ length:'20' })
   contact: string;
 
-  @Column()
+  @Column({ length:'20' })
   secondContact: string;
 
-  @Column()
+  @Column({ length:'100' })
   technician: string;
 
   @OneToMany(type => VisitInformation, visitInformation => visitInformation.visit, {
@@ -32,10 +32,10 @@ export default class Visit {
   })
   visitInformation: VisitInformation[];
   
-  @Column()
+  @Column({ length:'12' })
   visitDate: string;
 
-  @Column()
+  @Column({ length: '8' })
   visitHour: string;
 
   @Column({type: 'boolean'})
