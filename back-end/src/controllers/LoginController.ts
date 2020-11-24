@@ -10,11 +10,15 @@ import * as jwt from '../util/jwt';
 export default {
   async login(request: Request, response: Response) {
     
-    const credentials = request.body;
+    var credentials = request.headers.authorization;
     
     if(credentials !== undefined){
 
-      const {email, password} = credentials;
+      const [,hash] = credentials.split(' ');
+
+      credentials =  Buffer.from(hash, 'base64').toString();
+
+      const [email, password] = credentials.split(':'); 
 
       const userRepository = await getRepository(User);
       

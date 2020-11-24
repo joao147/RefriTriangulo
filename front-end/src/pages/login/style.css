@@ -1,0 +1,27 @@
+.login-page{
+  width: 100vw;
+  height: 100vh;
+
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.helper{
+  width: 80vw;
+  padding: 10px 5px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid black;
+  background-color: white;
+}
+
+.but{
+  width: 50vw;
+}

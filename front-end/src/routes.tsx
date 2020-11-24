@@ -8,6 +8,7 @@ import Visits from './pages/visits';
 import PostVisits from './pages/postVisits'
 import VisitComplete from './pages/visitComplete'
 import PostVisitComplete from './pages/postVisitComplete'
+import Login from './pages/login'
 
 const Routes = () => {
   
@@ -21,6 +22,7 @@ const Routes = () => {
         <Route path="/visit/:id" exact component={VisitComplete}/>
         <Route path="/postVisit" exact component={PostVisits}/>
         <Route path="/postVisit/:id" exact component={PostVisitComplete}/>
+        <Route path="/login" exact component={Login}/>
       </Switch>
     </BrowserRouter>
   )
