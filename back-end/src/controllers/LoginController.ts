@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs'
 import User from '../entities/user';
 
 import * as jwt from '../util/jwt';
+import { verify } from 'jsonwebtoken';
 
 
 export default {
@@ -24,24 +25,18 @@ export default {
       
       await userRepository.findOneOrFail({where: {email: email} })
       .then((user: User) => {
-
-        bcrypt.hash(password, 13, (err, hash) => {
-
-          if(err) throw err;
           
-          bcrypt.compare(user.password, hash)
-          .then( res => {
-            if(res){
+        bcrypt.compare(password, user.password, (err, res) => {
+          if(res){
 
-              const token = jwt.sign({userId: user.id});
+            const token = jwt.sign({userId: user.id});
 
-              return response.json({ token });
-            }else return response.json({message: 'error'});
-          })
-        })
+            return response.json({ token });
+          }else return response.send(false);
+        })  
       })
-      .catch(() => response.status(400).json({message: 'email ou senha invalido'}));
-    }  
+      .catch(() => response.send(false))
+    }
   },
   async create(request: Request, response: Response) {
 

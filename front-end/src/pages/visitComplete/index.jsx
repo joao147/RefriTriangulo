@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+
+import StorageContext from '../../context/context';
 
 import api from '../../services/api'
 
 import VisitComponent from '../../components/visitComplete'
-import { Visit } from '../../components/visits'
 import Title from '../../components/title'
-import { Link } from 'react-router-dom';
 
 import './style.css'
 
 const VisitComplete = () => {
+
+  const { setIsValid, token } = useContext(StorageContext);
+
+  const history = useHistory();
 
   const [visitItem, setVisitItem] = useState({
     id: 0, 
@@ -31,37 +36,21 @@ const VisitComplete = () => {
   
   async function getVisit(){    
 
-    api.get(url).then((response) => {
-      
-      const { 
-        id, 
-        name,
-        document,
-        adress,
-        contact,
-        secondContact,
-        technician,
-        visitInformation,
-        status,
-        visitDate,
-        visitHour
-      } = response.data;
-
-      const data = {
-        id,
-        name,
-        document,
-        adress,
-        contact,
-        secondContact,
-        technician,
-        visitInformation,
-        status,
-        visitDate,
-        visitHour
+    api.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-
-      setVisitItem(data)
+    })
+    .then((res) => {
+      if(res.data === false){
+        setIsValid(false);
+        history.push('/login');
+      }else{
+        setVisitItem(res.data);
+      }
+    })
+    .catch(()=>{
+      alert('Ocorreu um erro, tentei novamente em 2 minutos!');
     })
   }
 
@@ -71,7 +60,7 @@ const VisitComplete = () => {
     <div className='visitComplete'>
       <Title title='Triangulo' to='/visit'/>
       <VisitComponent visitItem={visitItem}/>
-      <div className='helper'>
+      <div className='helper1'>
         <Link to={`/visit/postVisit/create/${visitItem.id}`} className='visitButton'>
           <button type='button' >Concluir o cadastro da visita</button>
         </Link>

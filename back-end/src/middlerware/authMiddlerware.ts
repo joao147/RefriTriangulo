@@ -18,7 +18,7 @@ export default async function authMiddlerware(request: Request, response: Respon
 
       next();
     } catch (error) {
-      return response.send({message: 'token inválido'})
+      return response.send(false)
     }
-  }else return response.sendStatus(401)
+  }else return response.send(false)
 }

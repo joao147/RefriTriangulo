@@ -43,8 +43,7 @@ export default {
         relations: [ 'visit', 'material', 'visit.visitInformation' ]
       });
     }
-
-    console.log(allPostVitis)
+    
     return response.json(allPostVitis);
   },
 
@@ -105,6 +104,6 @@ export default {
 
     await getRepository(Visit).save(visit);
 
-    return response.status(201).json(data);
+    return response.sendStatus(201);
   }
 }

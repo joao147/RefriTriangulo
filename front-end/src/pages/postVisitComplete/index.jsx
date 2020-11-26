@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
+import StorageContext from '../../context/context';
 
 import api from '../../services/api';
 
@@ -8,6 +11,10 @@ import PostVisitItem from '../../components/postVisitComplete';
 import './style.css';
 
 const PostVisitComplete = () => {
+
+  const { setIsValid, token } = useContext(StorageContext);
+
+  const history = useHistory();
 
   const [postVisit, setPostVisit] = useState({
     id: 0,
@@ -44,8 +51,22 @@ const PostVisitComplete = () => {
 
   async function setPostVisitData(){
 
-    await api.get(url)
-    .then((response) => {setPostVisit(response.data);})
+    await api.get(url,{ 
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+     })
+    .then((res) => {
+      if(res.data === false){
+        setIsValid(false);
+        history.push('/login');
+      }else{
+        setPostVisit(res.data);
+      }
+    })
+    .catch(()=>{
+      alert('Ocorreu um erro, tentei novamente em 2 minutos!');
+    })
   }
 
   useEffect(()=>{setPostVisitData()},[])
@@ -56,7 +77,7 @@ const PostVisitComplete = () => {
 
       <Title title='Triangulo' to='/postVisit'/>
 
-      <div className="helper">
+      <div className="helper1">
 
         <PostVisitItem postVisitItem={postVisit}/>
 

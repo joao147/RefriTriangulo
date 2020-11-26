@@ -1,6 +1,8 @@
-import React, { FormEvent, useCallback, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom'
 import { FiPlus } from 'react-icons/fi';
+
+import StorageContext from '../../context/context'
 
 import api from '../../services/api';
 
@@ -11,6 +13,8 @@ import Title from '../../components/title';
 import './style.css';
 
 const FormPostVisit = () => {
+
+  const { setIsValid, token } = useContext(StorageContext);
 
   const [material, setMaterial] = useState([
     {material: '', materialPrice: 0, guarantee: ''}
@@ -25,7 +29,7 @@ const FormPostVisit = () => {
     {value:'12 meses ', label:'12 meses '},
 ]
 
-  const goBack = useHistory();
+  const history = useHistory();
 
   function newMaterialItem(){
     setMaterial([
@@ -34,7 +38,7 @@ const FormPostVisit = () => {
     ]) 
   }
 
-  function setMaterialValue(position: number, field: string, value: string){
+  function setMaterialValue(position, field, value){
     const updatedMaterial = material.map((material, index) => {
       if(position === index){
         return { ...material, [field]: value};
@@ -46,14 +50,14 @@ const FormPostVisit = () => {
 
   function materialCheck(){
     material.forEach((materialItem, index) =>{
-      if (materialItem.material === '' && materialItem.materialPrice === 0 && materialItem.guarantee === ''){
+      if (materialItem.material === '' && materialItem.guarantee === ''){
         if(material.length > 1)
           material.splice(index, 1)
       }
     })
   }
 
-  function handlerSubmit(e: FormEvent){
+  function handlerSubmit(e){
     e.preventDefault();
 
     materialCheck()
@@ -76,10 +80,19 @@ const FormPostVisit = () => {
         material,
         laborPrice,
         visitId
-      }).then(()=>{
-        alert('Cadastro da visita concluida');
-        goBack.push('/');
-      }).catch(()=>{
+      }, {headers: {
+        Authorization: `Bearer ${token}`
+      }})
+      .then((res)=>{
+        if(res.data === false){
+          setIsValid(false)
+          history.push('/login');
+        }else{
+          alert('Cadastro da visita concluida');
+          history.push('/');
+        }
+      })
+      .catch(()=>{
         alert('Ocorreu um erro no cadastro, tentei novamente em 2 minutos!');
       })
     }

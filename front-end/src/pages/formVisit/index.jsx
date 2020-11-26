@@ -1,6 +1,8 @@
-import React, { FormEvent, useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { useHistory } from 'react-router-dom'
 import { FiPlus } from 'react-icons/fi';
+
+import StorageContext from '../../context/context';
 
 import api from '../../services/api'
 
@@ -12,7 +14,9 @@ import './styles.css'
 
 function FormVisit() {
 
-  const goBack = useHistory();
+  const { setIsValid, token } = useContext(StorageContext);
+
+  const history = useHistory();
 
   const [name, setName] = useState('');
   const [document, setDocument] = useState('');
@@ -31,7 +35,7 @@ function FormVisit() {
     ]);
   }
 
-  function setvisitInformationsValue(position: number, field: string, value: string){
+  function setvisitInformationsValue(position, field, value){
     const updatedVisitInformation = visitInformation.map((visitInf, index) => {
       if(position === index){
         return { ...visitInf, [field]: value};
@@ -62,7 +66,7 @@ function FormVisit() {
     })
   }
 
-  const handlerDocument = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+  const handlerDocument = useCallback((e) => {
     
     let value = e.currentTarget.value;
 
@@ -82,7 +86,7 @@ function FormVisit() {
     setDocument(value);
   },[])
 
-  const handlerContact = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+  const handlerContact = useCallback((e) => {
     
     let value = e.currentTarget.value;
 
@@ -98,7 +102,7 @@ function FormVisit() {
     setContact(value);
   },[])
 
-  const handlerSecondContact = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+  const handlerSecondContact = useCallback((e) => {
     
     let value = e.currentTarget.value;
 
@@ -114,7 +118,7 @@ function FormVisit() {
     setSecondContact(value);
   },[])
 
-  function handlerSubmit(e: FormEvent) {
+  function handlerSubmit(e) {
     e.preventDefault()
 
     visitInformationCheck();
@@ -144,9 +148,20 @@ function FormVisit() {
         secondContact,
         technician,
         visitInformation
-      }).then(() => {
-        alert('Visita cadastrada com sucesso!');
-        goBack.push('/');
+      }, 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then((res) => {
+        if(res.data === false){
+          setIsValid(false);
+          history.push('/login');
+        }else{
+          alert('Visita cadastrada com sucesso!');
+          history.push('/');
+        }
       }).catch(() => {
         alert('Ocorreu um erro no cadastro, tentei novamente em 2 minutos!');
       });

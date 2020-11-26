@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom'
 import { FiFilter } from 'react-icons/fi'
+
+import StorageContext from '../../context/context';
 
 import api from '../../services/api';
 
 import Title from '../../components/title';
 import Input from '../../components/input';
-import PostVisitItem, { PostVisit } from '../../components/postVisits'
+import PostVisitItem from '../../components/postVisits'
 
 import convertDate from '../../utils/convertDate';
 
@@ -14,16 +16,40 @@ import './style.css';
 
 const PostVisits = () => {
 
+  const { setIsValid, token } = useContext(StorageContext);
+
+  const history = useHistory();
+
   const [postVisits, setPostVisits] = useState([]);
   const [name, setName] = useState('');
   const [visitDate, setVisitDate] = useState('');
+
   var date = visitDate;
   
   async function getPostVisits(){
-    api.get('post_visit', {params:{ name, visitDate }}).then((response) => {setPostVisits(response.data)})
+    api.get('post_visit', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      params:{ 
+        name, 
+        visitDate 
+      }
+    })
+    .then((res) => {
+      if(res.data === false){
+        setIsValid(false);
+        history.push('/login');
+      }else{
+        setPostVisits(res.data);
+      }
+    })
+    .catch(()=>{
+      alert('Ocorreu um erro, tentei novamente em 2 minutos!');
+    })
   }
 
-  function setId(id: number){
+  function setId(id){
 
     const storage = window.localStorage;
 
@@ -43,9 +69,25 @@ const PostVisits = () => {
         date = convertDate(visitDate);
       }
 
-      await api.get('post_visit', {params: { name, visitDate: date }})
-      .then((response)=>{
-        setPostVisits(response.data);
+      await api.get('post_visit', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        params: { 
+          name, 
+          visitDate: date 
+        }
+      })
+      .then((res) => {
+        if(res.data === false){
+          setIsValid(false);
+          history.push('/login');
+        }else{
+          setPostVisits(res.data);
+        }
+      })
+      .catch(()=>{
+        alert('Ocorreu um erro, tentei novamente em 2 minutos!');
       })
     }
   }
@@ -87,9 +129,9 @@ const PostVisits = () => {
 
       </section>
 
-      {postVisits.map((postVisitItem: PostVisit, index) => {
+      {postVisits.map((postVisitItem, index) => {
         return (
-          <div className="helper" key={index}>
+          <div className="helper1" key={index}>
             <Link to={`postVisit/${postVisitItem.visit.id}`} className='link' onClick={()=>{setId(postVisitItem.visit.id)}}>
               <PostVisitItem postVisit={postVisitItem}/>
             </Link>
