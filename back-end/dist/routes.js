@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var authMiddlerware_1 = __importDefault(require("./middlerware/authMiddlerware"));
+var VisitController_1 = __importDefault(require("./controllers/VisitController"));
+var PostvisitController_1 = __importDefault(require("./controllers/PostvisitController"));
+var LoginController_1 = __importDefault(require("./controllers/LoginController"));
+var routes = express_1.Router();
+routes.post('/sign', LoginController_1.default.create);
+routes.get('/login', LoginController_1.default.login);
+routes.use(authMiddlerware_1.default);
+routes.get('/visit', VisitController_1.default.index);
+routes.get('/visit/:id', VisitController_1.default.show);
+routes.post('/visit', VisitController_1.default.create);
+routes.get('/post_visit', PostvisitController_1.default.index);
+routes.get('/post_visit/:id', PostvisitController_1.default.show);
+routes.post('/post_visit', PostvisitController_1.default.create);
+exports.default = routes;
