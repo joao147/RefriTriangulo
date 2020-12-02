@@ -25,7 +25,6 @@ export default {
       
       await userRepository.findOneOrFail({where: {email: email} })
       .then((user: User) => {
-          
         bcrypt.compare(password, user.password, (err, res) => {
           if(res){
 
@@ -33,14 +32,16 @@ export default {
 
             return response.json({ token });
           }else return response.send(false);
-        })  
+        })
       })
       .catch(() => response.send(false))
-    }
+      }
   },
   async create(request: Request, response: Response) {
 
     const data = request.body;
+
+    console.log(data);
 
     const userRepository = await getRepository(User);
 

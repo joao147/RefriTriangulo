@@ -36,37 +36,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.user1605874858045 = void 0;
-var typeorm_1 = require("typeorm");
-var user1605874858045 = /** @class */ (function () {
-    function user1605874858045() {
+exports.admimPassword1606926553734 = void 0;
+var admimPassword1606926553734 = /** @class */ (function () {
+    function admimPassword1606926553734() {
     }
-    user1605874858045.prototype.up = function (queryRunner) {
+    admimPassword1606926553734.prototype.up = function (queryRunner) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, queryRunner.createTable(new typeorm_1.Table({
-                            name: 'user',
-                            columns: [
-                                {
-                                    name: 'id',
-                                    type: 'integer',
-                                    unsigned: true,
-                                    isPrimary: true,
-                                    isGenerated: true,
-                                    generationStrategy: 'increment'
-                                },
-                                {
-                                    name: 'email',
-                                    type: 'varchar',
-                                    isUnique: true
-                                },
-                                {
-                                    name: 'password',
-                                    type: 'varchar'
-                                }
-                            ]
-                        }))];
+                    case 0: return [4 /*yield*/, queryRunner.query("INSERT INTO user (email, password) VALUES ('test@gmail.com', '"+process.env.ADMIM_PASSWORD+"')")];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -74,11 +52,11 @@ var user1605874858045 = /** @class */ (function () {
             });
         });
     };
-    user1605874858045.prototype.down = function (queryRunner) {
+    admimPassword1606926553734.prototype.down = function (queryRunner) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, queryRunner.dropTable('user')];
+                    case 0: return [4 /*yield*/, queryRunner.query("DELETE FROM user WHERE email = 'test@gmail.com'")];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -86,6 +64,6 @@ var user1605874858045 = /** @class */ (function () {
             });
         });
     };
-    return user1605874858045;
+    return admimPassword1606926553734;
 }());
-exports.user1605874858045 = user1605874858045;
+exports.admimPassword1606926553734 = admimPassword1606926553734;

@@ -104,6 +104,7 @@ exports.default = {
                 switch (_a.label) {
                     case 0:
                         data = request.body;
+                        console.log(data);
                         return [4 /*yield*/, typeorm_1.getRepository(user_1.default)];
                     case 1:
                         userRepository = _a.sent();
