@@ -19,7 +19,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function handlerLogin(){
+  async function handlerLogin(){
     if(email !== '' && password !== ''){
       await api.get('/login', {auth:{username: email, password: password}})
       .then((res) => {
