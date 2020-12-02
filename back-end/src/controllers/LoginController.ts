@@ -41,8 +41,6 @@ export default {
 
     const data = request.body;
 
-    console.log(data);
-
     const userRepository = await getRepository(User);
 
     const newUser = userRepository.create(data);

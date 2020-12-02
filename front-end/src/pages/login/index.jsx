@@ -21,7 +21,7 @@ const Login = () => {
 
   function handlerLogin(){
     if(email !== '' && password !== ''){
-      api.get('/login', {auth:{username: email, password: password}})
+      await api.get('/login', {auth:{username: email, password: password}})
       .then((res) => {
 
         if(res.data !== false){
